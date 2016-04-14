@@ -58,19 +58,15 @@ ENV     PATH $PATH:/opt/go/bin
 RUN     GOPATH=/tmp/gotools \
         GOBIN=/usr/local/bin \
         go get -v \
+                golang.org/x/tools/cmd/... \
                 github.com/nsf/gocode \
-                golang.org/x/tools/cmd/goimports \
                 github.com/rogpeppe/godef \
-                golang.org/x/tools/cmd/oracle \
-                golang.org/x/tools/cmd/gorename \
                 github.com/golang/lint/golint \
                 github.com/kisielk/errcheck \
                 github.com/jstemmer/gotags \
                 github.com/garyburd/go-explorer/src/getool \
                 github.com/alecthomas/gometalinter \
                 github.com/klauspost/asmfmt \
-                golang.org/x/tools/cmd/godoc \
-                golang.org/x/tools/cmd/gotype \
                 github.com/opennota/check/cmd/varcheck \
                 github.com/opennota/check/cmd/structcheck \
                 github.com/gordonklaus/ineffassign \
@@ -81,6 +77,8 @@ RUN     GOPATH=/tmp/gotools \
                 github.com/mibk/dupl \
                 github.com/mvdan/interfacer/cmd/interfacer \
                 github.com/jgautheron/goconst/cmd/goconst \
+		github.com/fatih/motion \
+		github.com/zmb3/gogetdoc \
 &&      rm -r /tmp/gotools
 
 RUN     git clone https://github.com/vim/vim.git /tmp/vim \
