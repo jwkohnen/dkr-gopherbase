@@ -62,23 +62,15 @@ RUN     GOPATH=/tmp/gotools \
                 github.com/nsf/gocode \
                 github.com/rogpeppe/godef \
                 github.com/golang/lint/golint \
-                github.com/kisielk/errcheck \
                 github.com/jstemmer/gotags \
                 github.com/garyburd/go-explorer/src/getool \
                 github.com/alecthomas/gometalinter \
                 github.com/klauspost/asmfmt \
-                github.com/opennota/check/cmd/varcheck \
-                github.com/opennota/check/cmd/structcheck \
-                github.com/gordonklaus/ineffassign \
-                github.com/mdempsky/unconvert \
-                github.com/opennota/check/cmd/aligncheck \
-                github.com/tsenart/deadcode \
-                github.com/alecthomas/gocyclo \
-                github.com/mibk/dupl \
-                github.com/mvdan/interfacer/cmd/interfacer \
-                github.com/jgautheron/goconst/cmd/goconst \
 		github.com/fatih/motion \
 		github.com/zmb3/gogetdoc \
+&&	GOPATH=/tmp/gotools \
+	GOBIN=/usr/local/bin \
+	/usr/local/bin/gometalinter --install \
 &&      rm -r /tmp/gotools
 
 RUN     git clone https://github.com/vim/vim.git /tmp/vim \
