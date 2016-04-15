@@ -40,6 +40,18 @@ RUN     git clone https://github.com/google/protobuf /tmp/protobuf \
 &&      ldconfig \
 &&      rm -rf /tmp/protobuf
 
+RUN     git clone https://github.com/vim/vim.git /tmp/vim \
+&&      cd /tmp/vim \
+&&      ./configure \
+                --enable-pythoninterp \
+                --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
+&&      make \
+&&      make install \
+&&      rm -rf /tmp/vim \
+&&      update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 100 \
+&&      update-alternatives --set vi /usr/local/bin/vim
+ENV     EDITOR vim
+
 RUN     git clone https://go.googlesource.com/go /opt/go
 RUN     git clone --shared --branch go1.4.3 /opt/go /tmp/go1.4 \
 &&      cd /tmp/go1.4/src \
@@ -72,18 +84,6 @@ RUN     GOPATH=/tmp/gotools \
 	GOBIN=/usr/local/bin \
 	/usr/local/bin/gometalinter --install \
 &&      rm -r /tmp/gotools
-
-RUN     git clone https://github.com/vim/vim.git /tmp/vim \
-&&      cd /tmp/vim \
-&&      ./configure \
-                --enable-pythoninterp \
-                --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
-&&      make \
-&&      make install \
-&&      rm -rf /tmp/vim \
-&&      update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 100 \
-&&      update-alternatives --set vi /usr/local/bin/vim
-ENV     EDITOR vim
 
 RUN     mkdir -p /etc/skel/.vim/autoload
 RUN     mkdir -p /etc/skel/.vim/bundle
