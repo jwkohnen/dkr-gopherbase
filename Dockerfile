@@ -25,6 +25,7 @@ RUN	apt-get update \
 		autoconf \
 		automake \
 		libtool \
+		libcap-dev \
 &&	apt-get autoremove \
 &&	apt-get clean \
 &&	rm -rf /var/lib/apt/lists/*
@@ -55,7 +56,7 @@ ENV     EDITOR vim
 RUN     git clone https://go.googlesource.com/go /opt/go
 RUN     git clone --shared --branch go1.4.3 /opt/go /tmp/go1.4 \
 &&      cd /tmp/go1.4/src \
-&&      ./make.bash \
+&&      CGO_ENABLED=0 ./make.bash \
 &&      cd /opt/go/src \
 &&      git checkout release-branch.go1.6 \
 &&      GOROOT_BOOTSTRAP=/tmp/go1.4 ./make.bash \
