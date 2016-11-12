@@ -1,1 +1,5 @@
-HashKnownHosts no
+# Debian's system wide ssh config seem pointless in this context. YMMV. Hashing
+# of known hosts is off, in order to ease manual persisting of entries. Most
+# target hosts are not worth obscuring, again YMMV.
+Host *
+    HashKnownHosts no

@@ -155,5 +155,7 @@ RUN	GOPATH=/tmp/gotools \
 	/usr/local/bin/gometalinter --install \
 &&	rm -r /tmp/gotools
 
-COPY	ssh /etc/skel/.ssh
+COPY	ssh/config /etc/ssh/ssh_config
+COPY	ssh/known_hosts /etc/ssh/ssh_known_hosts
+MKDIR	/etc/skel/.ssh
 RUN	chmod 700 /etc/skel/.ssh
