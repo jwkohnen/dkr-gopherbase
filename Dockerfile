@@ -138,23 +138,29 @@ RUN	find /usr/local/ -not -group staff -print0 | xargs --null chgrp staff -- \
 
 RUN	GOPATH=/tmp/gotools \
 	GOBIN=/usr/local/bin \
-	go get -v \
-		golang.org/x/tools/cmd/... \
-		github.com/nsf/gocode \
-		github.com/rogpeppe/godef \
-		github.com/golang/lint/golint \
-		github.com/jstemmer/gotags \
-		github.com/garyburd/go-explorer/src/getool \
-		github.com/alecthomas/gometalinter \
-		github.com/klauspost/asmfmt \
-		github.com/fatih/motion \
-		github.com/zmb3/gogetdoc \
-		github.com/derekparker/delve/cmd/dlv \
-&&	GOPATH=/tmp/gotools \
-	GOBIN=/usr/local/bin \
-	/usr/local/bin/gometalinter --install \
-&&	rm -r /tmp/gotools
+	/bin/sh -c "\
+		go get -v \
+			golang.org/x/tools/cmd/... \
+			github.com/nsf/gocode \
+			github.com/rogpeppe/godef \
+			github.com/golang/lint/golint \
+			github.com/jstemmer/gotags \
+			github.com/garyburd/go-explorer/src/getool \
+			github.com/alecthomas/gometalinter \
+			github.com/klauspost/asmfmt \
+			github.com/fatih/motion \
+			github.com/zmb3/gogetdoc \
+			github.com/derekparker/delve/cmd/dlv \
+			github.com/golang/protobuf/proto \
+			github.com/golang/protobuf/protoc-gen-go \
+		&& ( cd /tmp/gotools/src/github.com/golang/protobuf && make ) \
+		&& /usr/local/bin/gometalinter --install \
+	" \
+&&	rm -r /tmp/gotools \
+&&	find /usr/local -not -group staff -print0 | xargs --null chgrp staff -- \
+&&	find /usr/local -not -perm -g+w -print0 | xargs --null chmod g+w --
 
+RUN	echo "%staff ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudo_nopasswd
 COPY	ssh/config /etc/ssh/ssh_config
 COPY	ssh/known_hosts /etc/ssh/ssh_known_hosts
 RUN	mkdir /etc/skel/.ssh
