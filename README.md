@@ -1,5 +1,5 @@
 This is a quite large docker container that provides a developement environment
-for Go. Since I have used it for collaboration to the Go target of [ANTLR](github.com/antlr/antlr4)
+for Go. Since I have used it for collaboration to the Go target of [ANTLR](https://github.com/antlr/antlr4)
 it contains a lot of non-Go stuff like Java, Mono, NodeJS and such that is needed
 to build ANTLR. Thats also why it is based on Ubuntu Trusty (instead of Debian,
 which I'd prefer); you will find some similarities to ANTLR's travis-ci setup.
