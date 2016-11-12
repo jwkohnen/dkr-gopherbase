@@ -156,3 +156,4 @@ RUN	GOPATH=/tmp/gotools \
 &&	rm -r /tmp/gotools
 
 COPY	ssh /etc/skel/.ssh
+RUN	chmod 700 /etc/skel/.ssh
