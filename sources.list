@@ -1,0 +1,8 @@
+deb http://archive.ubuntu.com/ubuntu/ trusty main restricted universe
+deb-src http://archive.ubuntu.com/ubuntu/ trusty main restricted universe
+
+deb http://archive.ubuntu.com/ubuntu/ trusty-updates universe
+deb-src http://archive.ubuntu.com/ubuntu/ trusty-updates universe
+
+deb http://archive.ubuntu.com/ubuntu/ trusty-security main restricted universe
+deb-src http://archive.ubuntu.com/ubuntu/ trusty-security main restricted universe
