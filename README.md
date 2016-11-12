@@ -8,7 +8,7 @@ This image features from-source-built Vim, YouCompleteMe, Protobuffer and a bunc
 of Go helper utilities like delve, gometalinter and glide.
 
 This image is not meant to be used directly, but instead as a base image for an
-image that configures a in-container user that matches UID and GID of the user
+image that configures an in-container user that matches UID and GID of the user
 on the host system and that adds SSH keys et cetera. This is the derivate
 Dockerfile that I use:
 
