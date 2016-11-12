@@ -75,8 +75,8 @@ RUN	git clone https://github.com/google/protobuf /tmp/protobuf \
 &&	cd /tmp/protobuf \
 &&	./autogen.sh \
 &&	./configure \
-&&	make -j4 \
-&&	make -j4 check \
+&&	make \
+&&	make check \
 &&	make install \
 &&	ldconfig \
 &&	rm -rf /tmp/protobuf
@@ -86,7 +86,7 @@ RUN	git clone https://github.com/vim/vim.git /tmp/vim \
 &&	./configure \
 		--enable-pythoninterp \
 		--with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
-&&	cd /tmp/vim && make -j4 \
+&&	cd /tmp/vim && make \
 &&	make install \
 &&	rm -rf /tmp/vim \
 &&	update-alternatives --install /usr/bin/vi vi /usr/local/bin/vim 100 \
