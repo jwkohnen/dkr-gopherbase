@@ -166,5 +166,6 @@ COPY	ssh/config /etc/ssh/ssh_config
 COPY	ssh/known_hosts /etc/ssh/ssh_known_hosts
 RUN	mkdir /etc/skel/.ssh
 RUN	chmod 700 /etc/skel/.ssh
+COPY	bashrc /etc/skel/.bashrc
 
 CMD ["/bin/bash", "-li"]
