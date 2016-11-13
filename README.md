@@ -1,3 +1,7 @@
+# Gopherbase, an overengineered Go developement environment in Docker
+
+[![Apache License v2.0](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
+
 This is a quite large docker container that provides a developement environment
 for Go. Since I have used it for collaboration to the Go target of [ANTLR](https://github.com/antlr/antlr4)
 it contains a lot of non-Go stuff like Java, Mono, NodeJS and such that is needed
@@ -41,4 +45,12 @@ ENV	GOPATH /go/default
 WORKDIR	/go
 VOLUME	/go
 VOLUME	/git
+```
+
+Given that image is called `gopher` I use a small wrapper script like this:
+
+```
+#!/bin/sh
+
+exec docker run --rm -ti -v $HOME/.m2:$HOME/.m2 -v $HOME/git:/git -v $HOME/go:/go "$@" gopher
 ```
