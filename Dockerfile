@@ -1,6 +1,5 @@
 FROM ubuntu:trusty
 MAINTAINER Wolfgang Johannes Kohnen <wjkohnen@users.noreply.github.com>
-CMD ["/bin/bash"]
 
 # http://stackoverflow.com/a/26217767/2715936 !?!?
 ENV 	DEBIAN_FRONTEND noninteractive
@@ -147,10 +146,12 @@ RUN	GOPATH=/tmp/gotools \
 			github.com/jstemmer/gotags \
 			github.com/garyburd/go-explorer/src/getool \
 			github.com/alecthomas/gometalinter \
-			github.com/klauspost/asmfmt \
+			github.com/klauspost/asmfmt/cmd/asmfmt \
+			github.com/josharian/impl \
 			github.com/fatih/motion \
 			github.com/zmb3/gogetdoc \
 			github.com/derekparker/delve/cmd/dlv \
+			github.com/Masterminds/glide \
 			github.com/golang/protobuf/proto \
 			github.com/golang/protobuf/protoc-gen-go \
 		&& ( cd /tmp/gotools/src/github.com/golang/protobuf && make ) \
@@ -165,3 +166,5 @@ COPY	ssh/config /etc/ssh/ssh_config
 COPY	ssh/known_hosts /etc/ssh/ssh_known_hosts
 RUN	mkdir /etc/skel/.ssh
 RUN	chmod 700 /etc/skel/.ssh
+
+CMD ["/bin/bash", "-li"]
