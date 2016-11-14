@@ -164,8 +164,9 @@ RUN	GOPATH=/tmp/gotools \
 RUN	echo "%staff ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudo_nopasswd
 COPY	ssh/config /etc/ssh/ssh_config
 COPY	ssh/known_hosts /etc/ssh/ssh_known_hosts
-RUN	mkdir /etc/skel/.ssh
-RUN	chmod 700 /etc/skel/.ssh
-COPY	bashrc /etc/skel/.bashrc
+COPY	bashrc /etc/skel/.bashrc_gopher
+RUN	mkdir /etc/skel/.ssh \
+&&	chmod 700 /etc/skel/.ssh \
+&&	echo '. ~/.bashrc_gopher' >> /etc/skel/.bashrc
 
-CMD ["/bin/bash", "-li"]
+CMD	["/bin/bash", "-li"]
