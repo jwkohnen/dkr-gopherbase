@@ -120,7 +120,7 @@ RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/loca
 ENV	PATH $PATH:/usr/local/go/bin
 
 # build tip into go-tip, using current release as bootstrap
-ENV	_DKR_BUMP 2016-11-12
+ENV	_DKR_BUMP 2016-11-19
 RUN	cd /usr/local/go-tip/src \
 &&	git pull \
 &&	git checkout master \
