@@ -1,24 +1,28 @@
-FROM ubuntu:trusty
+FROM debian:stretch
 MAINTAINER Wolfgang Johannes Kohnen <wjkohnen@users.noreply.github.com>
+CMD	["/bin/bash", "-li"]
+
+RUN	dpkg-divert /etc/locale.gen
+COPY	locale.gen /etc/
+COPY	sources.list /etc/apt/
+COPY	fixperms /usr/local/sbin/
 
 # http://stackoverflow.com/a/26217767/2715936 !?!?
 ENV 	DEBIAN_FRONTEND noninteractive
-RUN	echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true \
-		| /usr/bin/debconf-set-selections \
+RUN	apt-get update \
+&& 	apt-get -fy dist-upgrade \
+&&	apt-get install -y locales apt-utils gnupg2 \
 &&	echo tzdata tzdata/Zones/Etc select UTC | debconf-set-selections \
 &&	echo debconf debconf/priority select critical | debconf-set-selections \
 &&	echo debconf debconf/frontend select readline | debconf-set-selections \
 &&	echo debconf debconf/frontend seen false | debconf-set-selections \
-&&	dpkg-reconfigure tzdata \
-&&	locale-gen en_US.UTF-8 \
+&&	locale-gen \
 &&	dpkg-reconfigure locales \
-&&	locale -a
-ENV	LANG=en_US.UTF-8
-
-ADD	sources.list /etc/apt/
-RUN	apt-get update \
-&& 	apt-get -fy dist-upgrade \
-&&	apt-get install -y debconf \
+&&	dpkg-reconfigure tzdata \
+&&	apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF \
+&&	echo "deb http://download.mono-project.com/repo/debian wheezy main" > /etc/apt/sources.list.d/mono-xamarin.list \
+&&	apt-get update \
+&&	apt-get install -y --no-install-recommends \
 		vim-tiny- \
 		nvi \
 		build-essential \
@@ -45,32 +49,21 @@ RUN	apt-get update \
 		graphviz  \
 		faketime \
 		tree \
-&&	apt-key adv \
-		--keyserver hkp://keyserver.ubuntu.com:80 \
-		--recv-keys \
-			3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF \
-			E1DD270288B4E6030699E45FA1715D88E1DF1F24  \
-&&	add-apt-repository ppa:fkrull/deadsnakes -y  \
-&&	add-apt-repository ppa:rwky/nodejs -y \
-&&	echo "deb http://download.mono-project.com/repo/debian wheezy main" > \
-		/etc/apt/sources.list.d/mono-xamarin.list  \
-&&	echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" > \
-		/etc/apt/sources.list.d/webupd8team-java.list \
-&&	apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 \
-		--recv-keys EEA14886  \
-&&	apt-get update \
-&&	apt-get install -y \
+		dirmngr \
+		nodejs \
 		maven \
-		python3.5 \
+		python3 \
 		nodejs \
 		mono-complete \
-		oracle-java8-set-default \
+		unzip \
+		default-jdk-headless \
+		openssh-client \
 &&	apt-get autoremove \
 &&	apt-get clean \
 &&	rm -rf /var/lib/apt/lists/*
 ENV	DEBIAN_FRONTEND dialog
+ENV	LANG=en_US.UTF-8
 
-COPY	fixperms /usr/local/sbin/
 
 ENV	_DKR_PROTOBUF_VERSION v3.1.0
 RUN	git clone https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
@@ -118,7 +111,7 @@ RUN	git clone https://go.googlesource.com/go /usr/local/go-tip \
 
 # build current release into /usr/local/go using 1.4 for bootstrap
 ENV	_DKR_GO_RELEASE 1.7
-ENV	_DKR_BUMP 2016-11-12
+ENV	_DKR_BUMP 1
 RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/local/go-tip https://go.googlesource.com/go /usr/local/go \
 &&	cd /usr/local/go/src \
 &&	GOROOT_BOOTSTRAP=/usr/local/go1.4 ./make.bash \
@@ -126,7 +119,7 @@ RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/loca
 ENV	PATH $PATH:/usr/local/go/bin
 
 # build tip into go-tip, using current release as bootstrap
-ENV	_DKR_BUMP 2016-11-19
+ENV	_DKR_BUMP 1
 RUN	cd /usr/local/go-tip/src \
 &&	git pull \
 &&	git checkout master \
@@ -165,12 +158,14 @@ RUN	GOPATH=/tmp/gotools \
 &&	rm -r /tmp/gotools \
 &&	fixperms
 
-RUN	echo "%staff ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudo_nopasswd
-COPY	ssh/config /etc/ssh/ssh_config
-COPY	ssh/known_hosts /etc/ssh/ssh_known_hosts
-COPY	bashrc /etc/skel/.bashrc_gopher
-RUN	mkdir /etc/skel/.ssh \
+RUN	dpkg-divert /etc/ssh/ssh_config \
+&&	echo "%staff ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudo_nopasswd \
+&&	mkdir /etc/skel/.ssh \
 &&	chmod 700 /etc/skel/.ssh \
 &&	echo '. ~/.bashrc_gopher' >> /etc/skel/.bashrc
+COPY	bashrc /etc/skel/.bashrc_gopher
+COPY	ssh/ssh_config ssh/ssh_known_hosts /etc/ssh/
 
-CMD	["/bin/bash", "-li"]
+RUN	git config --system alias.st status \
+&&	git config --system commit.verbose true \
+&&	git config --system push.default simple
