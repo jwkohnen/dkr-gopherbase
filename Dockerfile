@@ -70,7 +70,10 @@ RUN	apt-get update \
 &&	rm -rf /var/lib/apt/lists/*
 ENV	DEBIAN_FRONTEND dialog
 
-RUN	git clone https://github.com/google/protobuf /tmp/protobuf \
+COPY	fixperms /usr/local/sbin/
+
+ENV	_DKR_PROTOBUF_VERSION v3.1.0
+RUN	git clone https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
 &&	cd /tmp/protobuf \
 &&	./autogen.sh \
 &&	./configure \
@@ -78,7 +81,8 @@ RUN	git clone https://github.com/google/protobuf /tmp/protobuf \
 &&	make check \
 &&	make install \
 &&	ldconfig \
-&&	rm -rf /tmp/protobuf
+&&	rm -rf /tmp/protobuf \
+&&	fixperms
 
 RUN	git clone https://github.com/vim/vim.git /tmp/vim \
 &&	cd /tmp/vim \
@@ -92,16 +96,16 @@ RUN	git clone https://github.com/vim/vim.git /tmp/vim \
 &&	update-alternatives --set vi /usr/local/bin/vim
 ENV	EDITOR vim
 
+ENV	_DKR_VIMGO_VERSION v1.10
 RUN	mkdir -p /etc/skel/.vim/autoload \
 &&	mkdir -p /etc/skel/.vim/bundle \
 &&	curl -LSso /etc/skel/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim \
-&&	git clone https://github.com/fatih/vim-go.git /etc/skel/.vim/bundle/vim-go \
+&&	git clone https://github.com/fatih/vim-go.git --branch $_DKR_VIMGO_VERSION /etc/skel/.vim/bundle/vim-go \
 &&	git clone https://github.com/Valloric/YouCompleteMe.git /opt/YouCompleteMe  \
 &&	cd /opt/YouCompleteMe \
 &&	git submodule update --init --recursive \
 &&	./install.py \
-&&	find /opt -not -group staff -print0 | xargs --null chgrp staff -- \
-&&	find /opt -not -perm -g+w -print0 | xargs --null chmod g+w -- \
+&&	fixperms \
 &&	ln -s /opt/YouCompleteMe /etc/skel/.vim/bundle/YouCompleteMe
 ADD	vimrc /etc/skel/.vimrc
 
@@ -109,14 +113,16 @@ ADD	vimrc /etc/skel/.vimrc
 RUN	git clone https://go.googlesource.com/go /usr/local/go-tip \
 &&	git clone --shared --branch go1.4.3 /usr/local/go-tip /usr/local/go1.4 \
 &&	cd /usr/local/go1.4/src \
-&&	CGO_ENABLED=0 ./make.bash
+&&	CGO_ENABLED=0 ./make.bash \
+&&	fixperms
 
 # build current release into /usr/local/go using 1.4 for bootstrap
 ENV	_DKR_GO_RELEASE 1.7
 ENV	_DKR_BUMP 2016-11-12
 RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/local/go-tip https://go.googlesource.com/go /usr/local/go \
 &&	cd /usr/local/go/src \
-&&	GOROOT_BOOTSTRAP=/usr/local/go1.4 ./make.bash
+&&	GOROOT_BOOTSTRAP=/usr/local/go1.4 ./make.bash \
+&&	fixperms
 ENV	PATH $PATH:/usr/local/go/bin
 
 # build tip into go-tip, using current release as bootstrap
@@ -124,16 +130,15 @@ ENV	_DKR_BUMP 2016-11-19
 RUN	cd /usr/local/go-tip/src \
 &&	git pull \
 &&	git checkout master \
-&&	GOROOT_BOOTSTRAP=/usr/local/go ./make.bash
+&&	GOROOT_BOOTSTRAP=/usr/local/go ./make.bash \
+&&	fixperms
 
 # cache some go runtimes
 RUN	GOOS=windows /usr/local/go/bin/go install -v std \
 &&	GOOS=darwin /usr/local/go/bin/go install -v std \
 &&	GOARCH=386 /usr/local/go/bin/go install -v std \
-&&	/usr/local/go/bin/go install -v -race std
-
-RUN	find /usr/local/ -not -group staff -print0 | xargs --null chgrp staff -- \
-&&	find /usr/local/ -not -perm -g+w -print0 | xargs --null chmod g+w --
+&&	/usr/local/go/bin/go install -v -race std \
+&&	fixperms
 
 RUN	GOPATH=/tmp/gotools \
 	GOBIN=/usr/local/bin \
@@ -158,8 +163,7 @@ RUN	GOPATH=/tmp/gotools \
 		&& /usr/local/bin/gometalinter --install \
 	" \
 &&	rm -r /tmp/gotools \
-&&	find /usr/local -not -group staff -print0 | xargs --null chgrp staff -- \
-&&	find /usr/local -not -perm -g+w -print0 | xargs --null chmod g+w --
+&&	fixperms
 
 RUN	echo "%staff ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudo_nopasswd
 COPY	ssh/config /etc/ssh/ssh_config
