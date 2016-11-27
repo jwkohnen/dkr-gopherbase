@@ -1,3 +1,4 @@
+export PATH=/usr/local/go/bin:$PATH
 export EDITOR=vim
 eval $(ssh-agent -s) &> /dev/null
 
