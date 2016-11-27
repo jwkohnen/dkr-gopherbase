@@ -58,6 +58,7 @@ RUN	apt-get update \
 		unzip \
 		default-jdk-headless \
 		openssh-client \
+		less \
 &&	apt-get autoremove \
 &&	apt-get clean \
 &&	rm -rf /var/lib/apt/lists/*
@@ -116,7 +117,8 @@ RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/loca
 &&	cd /usr/local/go/src \
 &&	GOROOT_BOOTSTRAP=/usr/local/go1.4 ./make.bash \
 &&	fixperms
-ENV	PATH $PATH:/usr/local/go/bin
+# keep PATH in sync with bashrc!
+ENV	PATH /usr/local/go/bin:$PATH
 
 # build tip into go-tip, using current release as bootstrap
 ENV	_DKR_BUMP 1
