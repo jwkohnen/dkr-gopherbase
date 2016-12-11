@@ -1,16 +1,12 @@
 variables:
   GOOGLE_APPLICATION_CREDENTIALS: /gcloud-service-key.json
-  CI_REGISTRY_IMAGE: eu.gcr.io/tfw-server
+  CI_REGISTRY_IMAGE: $REGISTRY/$REGISTRY_PROJECT
   CI_IMAGE_TAG: $CI_REGISTRY_IMAGE/$CI_PROJECT_NAME
 
 before_script:
-  # $GCLOUD_SERVICE_KEY is a "secret" variable, defined in project's GitLab preferences.
   - echo $GCLOUD_SERVICE_KEY | base64 -d >$GOOGLE_APPLICATION_CREDENTIALS
-  - docker login -u _json_key -p "$(cat $GOOGLE_APPLICATION_CREDENTIALS)" https://eu.gcr.io
+  - docker login -u _json_key -p "$(cat $GOOGLE_APPLICATION_CREDENTIALS)" https://$REGISTRY
 
-# If not overwritten, each job runs on the "docker-in-docker" (dind)
-# image. Version 1.11 is needed due to the current GCE cluster
-# version in production.
 image: docker:1.11
 
 stages:
@@ -26,7 +22,6 @@ build:
   except: 
     - tags
 
-# Non-master branches and tags will be released with :<ref_name> as the tag
 release-by-name:
   stage: release
   script: 
@@ -36,7 +31,6 @@ release-by-name:
   except: 
     - master
 
-# Master will be released with :latest as the tag
 release-master:
   stage: release
   script: 
