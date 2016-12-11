@@ -1,8 +1,9 @@
-deb http://archive.ubuntu.com/ubuntu/ trusty main restricted universe
-deb-src http://archive.ubuntu.com/ubuntu/ trusty main restricted universe
+deb http://httpredir.debian.org/debian/ stretch main non-free contrib
+deb-src http://httpredir.debian.org/debian/ stretch main non-free contrib
 
-deb http://archive.ubuntu.com/ubuntu/ trusty-updates universe
-deb-src http://archive.ubuntu.com/ubuntu/ trusty-updates universe
+deb http://security.debian.org/ stretch/updates main contrib non-free
+deb-src http://security.debian.org/ stretch/updates main contrib non-free
 
-deb http://archive.ubuntu.com/ubuntu/ trusty-security main restricted universe
-deb-src http://archive.ubuntu.com/ubuntu/ trusty-security main restricted universe
+# stretch-updates, previously known as 'volatile'
+deb http://httpredir.debian.org/debian/ stretch-updates main contrib non-free
+deb-src http://httpredir.debian.org/debian/ stretch-updates main contrib non-free
