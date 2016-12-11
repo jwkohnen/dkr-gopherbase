@@ -17,7 +17,7 @@ on the host system and that adds SSH keys et cetera. This is the derivate
 Dockerfile that I use:
 
 ```
-FROM	wjkohnen/gopherbase:2016-11-12
+FROM	wjkohnen/gopherbase:latest
 MAINTAINER Wolfgang Johannes Kohnen <wjkohnen@users.noreply.github.com>
 
 ARG	u=wjk
@@ -35,16 +35,10 @@ RUN	chown -R $u: /home/$u
 
 USER	$u
 RUN	git config --global user.name "$fn" \
-&&	git config --global user.email "$m" \
-&&	git config --global alias.st status \
-&&	git config --global push.default simple \
-&&	git config --global commit.verbose true
+&&	git config --global user.email "$m"
 
 ENV	GOPATH /go/default
-#ENV	PATH $PATH:/home/$u/go/bin
 WORKDIR	/go
-VOLUME	/go
-VOLUME	/git
 ```
 
 Given that image is called `gopher` I use a small wrapper script like this:
