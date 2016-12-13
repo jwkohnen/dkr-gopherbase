@@ -15,7 +15,6 @@ stages:
 
 build:
   stage: build
-  when: manual
   script:
     - docker build --pull -t $CI_IMAGE_TAG:$CI_BUILD_REF .
     - docker push $CI_IMAGE_TAG:$CI_BUILD_REF
