@@ -1,5 +1,18 @@
 FROM debian:stretch
 MAINTAINER Wolfgang Johannes Kohnen <wjkohnen@users.noreply.github.com>
+ARG	BUILD_DATE
+ARG	VCS_REF
+ARG	VERSION
+LABEL	org.label-schema.build-date=$BUILD_DATE \
+	org.label-schema.name="Gopherbase" \
+	org.label-schema.description="An overengineered Go development environment in Docker" \
+	org.label-schema.url="https://github.com/wjkohnen/dkr-gopherbase/" \
+	org.label-schema.vcs-ref=$VCS_REF \
+	org.label-schema.vcs-url="https://github.com/wjkohnen/dkr-gopherbase/" \
+	org.label-schema.vendor="Wolfgang Johannes Kohnen" \
+	org.label-schema.version=$VERSION \
+	org.label-schema.schema-version="1.0"
+	
 CMD	["/bin/bash", "-li"]
 
 RUN	dpkg-divert /etc/locale.gen

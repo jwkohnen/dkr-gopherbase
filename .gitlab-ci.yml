@@ -16,7 +16,7 @@ stages:
 build:
   stage: build
   script:
-    - docker build --pull -t $CI_IMAGE_TAG:$CI_BUILD_REF .
+    - docker build --pull -t $CI_IMAGE_TAG:$CI_BUILD_REF --build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") --build-arg VCS_REF=$(git rev-parse --short HEAD) --build-arg VERSION=$(cat VERSION) . \
     - docker push $CI_IMAGE_TAG:$CI_BUILD_REF
   except: 
     - tags
