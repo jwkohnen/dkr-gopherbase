@@ -68,7 +68,7 @@ ENV	LANG=en_US.UTF-8
 
 
 ENV	_DKR_PROTOBUF_VERSION v3.1.0
-RUN	git clone https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
+RUN	git clone --depth=1 https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
 &&	cd /tmp/protobuf \
 &&	./autogen.sh \
 &&	./configure \
@@ -79,7 +79,7 @@ RUN	git clone https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION
 &&	rm -rf /tmp/protobuf \
 &&	fixperms
 
-RUN	git clone https://github.com/vim/vim.git /tmp/vim \
+RUN	git clone --depth=1 https://github.com/vim/vim.git /tmp/vim \
 &&	cd /tmp/vim \
 &&	./configure \
 		--enable-pythoninterp \
@@ -95,8 +95,8 @@ ENV	_DKR_VIMGO_VERSION v1.10
 RUN	mkdir -p /etc/skel/.vim/autoload \
 &&	mkdir -p /etc/skel/.vim/bundle \
 &&	curl -LSso /etc/skel/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim \
-&&	git clone https://github.com/fatih/vim-go.git --branch $_DKR_VIMGO_VERSION /etc/skel/.vim/bundle/vim-go \
-&&	git clone https://github.com/Valloric/YouCompleteMe.git /opt/YouCompleteMe  \
+&&	git clone --depth=1 https://github.com/fatih/vim-go.git --branch $_DKR_VIMGO_VERSION /etc/skel/.vim/bundle/vim-go \
+&&	git clone --depth=1 https://github.com/Valloric/YouCompleteMe.git /opt/YouCompleteMe  \
 &&	cd /opt/YouCompleteMe \
 &&	git submodule update --init --recursive \
 &&	./install.py \
@@ -165,7 +165,8 @@ RUN	dpkg-divert /etc/ssh/ssh_config \
 &&	echo "%staff ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudo_nopasswd \
 &&	mkdir /etc/skel/.ssh \
 &&	chmod 700 /etc/skel/.ssh \
-&&	echo '. ~/.bashrc_gopher' >> /etc/skel/.bashrc
+&&	echo '. ~/.bashrc_gopher' >> /etc/skel/.bashrc \
+&&	git clone --depth=1 https://github.com/magicmonty/bash-git-prompt.git /etc/skel/.bash-git-prompt
 COPY	bashrc /etc/skel/.bashrc_gopher
 COPY	ssh/ssh_config ssh/ssh_known_hosts /etc/ssh/
 
