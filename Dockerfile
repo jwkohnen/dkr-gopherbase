@@ -186,3 +186,10 @@ LABEL	org.label-schema.build-date=$BUILD_DATE \
 	org.label-schema.vendor="Wolfgang Johannes Kohnen" \
 	org.label-schema.version=$VERSION \
 	org.label-schema.schema-version="1.0"
+
+ENV	_DKR_ANTLR_VERSION 4.6
+RUN	git clone --depth=1 --branch $_DKR_ANTLR_VERSION https://github.com/antlr/antlr4.git /tmp/antlr4.6 \
+&&	( cd /tmp/antlr4.6/tool && mvn package -DskipTests ) \
+&&	cp /tmp/antlr4.6/tool/target/antlr4-4.6-complete.jar /usr/local/lib/ \
+&&	rm -rf /tmp/antlr4.6
+ENV	CLASSPATH .:/usr/local/lib/antlr4-4.6-complete.jar
