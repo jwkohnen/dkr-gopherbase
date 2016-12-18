@@ -66,6 +66,12 @@ RUN	apt-get update \
 ENV	DEBIAN_FRONTEND dialog
 ENV	LANG=en_US.UTF-8
 
+ENV	_DKR_ANTLR_VERSION 4.6
+RUN	git clone --depth=1 --branch $_DKR_ANTLR_VERSION https://github.com/antlr/antlr4.git /tmp/antlr4.6 \
+&&	( cd /tmp/antlr4.6/tool && mvn package -DskipTests ) \
+&&	cp /tmp/antlr4.6/tool/target/antlr4-4.6-complete.jar /usr/local/lib/ \
+&&	rm -rf /tmp/antlr4.6 /root/.m2
+ENV	CLASSPATH .:/usr/local/lib/antlr4-4.6-complete.jar
 
 ENV	_DKR_PROTOBUF_VERSION v3.1.0
 RUN	git clone --depth=1 https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
@@ -173,13 +179,6 @@ COPY	ssh/ssh_config ssh/ssh_known_hosts /etc/ssh/
 RUN	git config --system alias.st status \
 &&	git config --system commit.verbose true \
 &&	git config --system push.default simple
-
-ENV	_DKR_ANTLR_VERSION 4.6
-RUN	git clone --depth=1 --branch $_DKR_ANTLR_VERSION https://github.com/antlr/antlr4.git /tmp/antlr4.6 \
-&&	( cd /tmp/antlr4.6/tool && mvn package -DskipTests ) \
-&&	cp /tmp/antlr4.6/tool/target/antlr4-4.6-complete.jar /usr/local/lib/ \
-&&	rm -rf /tmp/antlr4.6 /root/.m2
-ENV	CLASSPATH .:/usr/local/lib/antlr4-4.6-complete.jar
 
 ARG	BUILD_DATE
 ARG	VCS_REF
