@@ -1,6 +1,20 @@
-FROM debian:stretch
-MAINTAINER Wolfgang Johannes Kohnen <wjkohnen@users.noreply.github.com>
-	
+# Copyright 2016 Wolfgang Johannes Kohnen
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#    http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+FROM	debian:stretch
+MAINTAINER	Wolfgang Johannes Kohnen <wjkohnen@users.noreply.github.com>
+
 CMD	["/bin/bash", "-li"]
 
 RUN	dpkg-divert /etc/locale.gen
@@ -11,8 +25,10 @@ COPY	fixperms /usr/local/sbin/
 # http://stackoverflow.com/a/26217767/2715936 !?!?
 ENV 	DEBIAN_FRONTEND noninteractive
 RUN	apt-get update \
-&& 	apt-get -fy dist-upgrade \
-&&	apt-get install -y locales apt-utils gnupg2 \
+&&	apt-get -yqq install dpkg apt \
+&&	apt-get -yqq upgrade \
+&& 	apt-get -fyqq dist-upgrade \
+&&	apt-get -yqq --no-install-recommends install locales apt-utils gnupg2 \
 &&	echo tzdata tzdata/Zones/Etc select UTC | debconf-set-selections \
 &&	echo debconf debconf/priority select critical | debconf-set-selections \
 &&	echo debconf debconf/frontend select readline | debconf-set-selections \
@@ -23,7 +39,7 @@ RUN	apt-get update \
 &&	apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF \
 &&	echo "deb http://download.mono-project.com/repo/debian wheezy main" > /etc/apt/sources.list.d/mono-xamarin.list \
 &&	apt-get update \
-&&	apt-get install -y --no-install-recommends \
+&&	apt-get install -yqq --no-install-recommends \
 		vim-tiny- \
 		nvi \
 		build-essential \
@@ -63,7 +79,6 @@ RUN	apt-get update \
 &&	apt-get autoremove \
 &&	apt-get clean \
 &&	rm -rf /var/lib/apt/lists/*
-ENV	DEBIAN_FRONTEND dialog
 ENV	LANG=en_US.UTF-8
 
 ENV	_DKR_ANTLR_VERSION 4.6

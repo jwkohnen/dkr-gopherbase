@@ -1,4 +1,4 @@
-# Gopherbase, an overengineered Go developement environment in Docker
+# Gopherbase, an overengineered Go development environment in Docker
 
 [![Apache License v2.0](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
 [![Docker Layer Badge](https://images.microbadger.com/badges/image/wjkohnen/gopherbase.svg)](https://microbadger.com/images/wjkohnen/gopherbase)
@@ -6,8 +6,7 @@
 This is a quite large docker container that provides a development environment
 for Go. Since I have used it for collaboration to the Go target of [ANTLR](https://github.com/antlr/antlr4)
 it contains a lot of non-Go stuff like Java, Mono, NodeJS and such that is needed
-to build ANTLR. Thats also why it is based on Ubuntu Trusty (instead of Debian,
-which I'd prefer); you will find some similarities to ANTLR's travis-ci setup.
+to build ANTLR. 
 
 This image features from-source-built Vim, YouCompleteMe, Protobuffer and a bunch
 of Go helper utilities like delve, gometalinter and glide.
@@ -38,7 +37,7 @@ USER	$u
 RUN	git config --global user.name "$fn" \
 &&	git config --global user.email "$m"
 
-ENV	GOPATH /go/default
+ENV	GOPATH /home/$u/go/default
 WORKDIR	/go
 ```
 
@@ -47,5 +46,5 @@ Given that image is called `gopher` I use a small wrapper script like this:
 ```
 #!/bin/sh
 
-exec docker run --rm -ti -v $HOME/.m2:$HOME/.m2 -v $HOME/git:/git -v $HOME/go:/go "$@" gopher
+exec docker run --rm -ti -v $HOME/.m2:$HOME/.m2 -v $HOME/git:$HOME/git -v $HOME/go:$HOME/go "$@" gopher
 ```
