@@ -28,7 +28,7 @@ RUN	apt-get update \
 &&	apt-get -yqq install dpkg apt \
 &&	apt-get -yqq upgrade \
 && 	apt-get -fyqq dist-upgrade \
-&&	apt-get -yqq --no-install-recommends install locales apt-utils gnupg2 \
+&&	apt-get -yqq --no-install-recommends install locales apt-utils gnupg2 dirmngr \
 &&	echo tzdata tzdata/Zones/Etc select UTC | debconf-set-selections \
 &&	echo debconf debconf/priority select critical | debconf-set-selections \
 &&	echo debconf debconf/frontend select readline | debconf-set-selections \
@@ -66,7 +66,6 @@ RUN	apt-get update \
 		graphviz  \
 		faketime \
 		tree \
-		dirmngr \
 		nodejs \
 		maven \
 		python3 \
