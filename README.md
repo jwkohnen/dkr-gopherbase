@@ -22,7 +22,6 @@ MAINTAINER Johannes Kohnen <wjkohnen@users.noreply.github.com>
 
 ARG	u=wjk
 ARG	uid=1001
-ARG	gid=1001
 ARG	fn="Johannes Kohnen"
 ARG	m="wjkohnen@users.noreply.github.com"
 
@@ -37,7 +36,7 @@ USER	$u
 RUN	git config --global user.name "$fn" \
 &&	git config --global user.email "$m"
 
-ENV	GOPATH /home/$u/go/default
+ENV	GOPATH /go/default
 WORKDIR	/go
 ```
 
@@ -46,7 +45,7 @@ Given that image is called `gopher` I use a small wrapper script like this:
 ```
 #!/bin/sh
 
-exec docker run --rm -ti -v $HOME/.m2:$HOME/.m2 -v $HOME/git:$HOME/git -v $HOME/go:$HOME/go "$@" gopher
+exec docker run --rm -ti -v $HOME/.m2:$HOME/.m2 -v $HOME/git:/git -v $HOME/go:/go "$@" gopher
 ```
 
 ## License
