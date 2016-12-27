@@ -1,4 +1,4 @@
-# Copyright 2016 Wolfgang Johannes Kohnen
+# Copyright 2016 Johannes Kohnen
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 # limitations under the License.
 
 FROM	debian:stretch
-MAINTAINER	Wolfgang Johannes Kohnen <wjkohnen@users.noreply.github.com>
+MAINTAINER	Johannes Kohnen <wjkohnen@users.noreply.github.com>
 
 CMD	["/bin/bash", "-li"]
 
@@ -142,7 +142,7 @@ RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/loca
 ENV	PATH /usr/local/go/bin:$PATH
 
 # build tip into go-tip, using current release as bootstrap
-ENV	_DKR_BUMP 2
+ENV	_DKR_BUMP 3
 RUN	cd /usr/local/go-tip/src \
 &&	git pull \
 &&	git checkout master \
