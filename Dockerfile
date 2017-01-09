@@ -111,7 +111,7 @@ RUN	git clone --depth=1 https://github.com/vim/vim.git /tmp/vim \
 &&	update-alternatives --set vi /usr/local/bin/vim
 ENV	EDITOR vim
 
-ENV	_DKR_VIMGO_VERSION v1.10
+ENV	_DKR_VIMGO_VERSION v1.11
 RUN	mkdir -p /etc/skel/.vim/autoload \
 &&	mkdir -p /etc/skel/.vim/bundle \
 &&	curl -LSso /etc/skel/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim \
