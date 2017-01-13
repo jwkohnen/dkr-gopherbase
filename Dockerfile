@@ -142,7 +142,7 @@ RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/loca
 ENV	PATH /usr/local/go/bin:$PATH
 
 # build tip into go-tip, using current release as bootstrap
-ENV	_DKR_BUMP 3
+ENV	_DKR_BUMP 4
 RUN	cd /usr/local/go-tip/src \
 &&	git pull \
 &&	git checkout master \
@@ -203,6 +203,6 @@ LABEL	org.label-schema.build-date=$BUILD_DATE \
 	org.label-schema.url="https://github.com/wjkohnen/dkr-gopherbase/" \
 	org.label-schema.vcs-ref=$VCS_REF \
 	org.label-schema.vcs-url="https://github.com/wjkohnen/dkr-gopherbase/" \
-	org.label-schema.vendor="Wolfgang Johannes Kohnen" \
+	org.label-schema.vendor="Johannes Kohnen" \
 	org.label-schema.version=$VERSION \
 	org.label-schema.schema-version="1.0"
