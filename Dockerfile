@@ -19,7 +19,7 @@ CMD	["/bin/bash", "-li"]
 
 RUN	dpkg-divert /etc/locale.gen
 COPY	locale.gen /etc/
-COPY	sources.list /etc/apt/
+# COPY	sources.list /etc/apt/
 COPY	fixperms /usr/local/sbin/
 
 # http://stackoverflow.com/a/26217767/2715936 !?!?
