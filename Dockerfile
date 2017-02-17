@@ -75,6 +75,7 @@ RUN	apt-get update \
 		default-jdk-headless \
 		openssh-client \
 		less \
+		upx-ucl \
 &&	apt-get autoremove \
 &&	apt-get clean \
 &&	rm -rf /var/lib/apt/lists/*
@@ -175,6 +176,8 @@ RUN	GOPATH=/tmp/gotools \
 			github.com/Masterminds/glide \
 			github.com/golang/protobuf/proto \
 			github.com/golang/protobuf/protoc-gen-go \
+			github.com/golang/dep/... \
+			github.com/spf13/cobra/cobra \
 		&& ( cd /tmp/gotools/src/github.com/golang/protobuf && make ) \
 		&& /usr/local/bin/gometalinter --install \
 	" \
