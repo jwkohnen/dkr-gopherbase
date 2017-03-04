@@ -88,7 +88,7 @@ RUN	git clone --depth=1 --branch $_DKR_ANTLR_VERSION https://github.com/antlr/an
 &&	rm -rf /tmp/antlr4.6 /root/.m2
 ENV	CLASSPATH .:/usr/local/lib/antlr4-4.6-complete.jar
 
-ENV	_DKR_PROTOBUF_VERSION v3.1.0
+ENV	_DKR_PROTOBUF_VERSION v3.2.0
 RUN	git clone --depth=1 https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
 &&	cd /tmp/protobuf \
 &&	./autogen.sh \
