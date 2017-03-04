@@ -178,6 +178,7 @@ RUN	GOPATH=/tmp/gotools \
 			github.com/golang/protobuf/protoc-gen-go \
 			github.com/golang/dep/... \
 			github.com/spf13/cobra/cobra \
+			github.com/kardianos/govendor \
 		&& ( cd /tmp/gotools/src/github.com/golang/protobuf && make ) \
 		&& /usr/local/bin/gometalinter --install \
 	" \
