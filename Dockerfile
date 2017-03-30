@@ -112,7 +112,7 @@ RUN	git clone --depth=1 https://github.com/vim/vim.git /tmp/vim \
 &&	update-alternatives --set vi /usr/local/bin/vim
 ENV	EDITOR vim
 
-ENV	_DKR_VIMGO_VERSION v1.11
+ENV	_DKR_VIMGO_VERSION v1.12
 RUN	mkdir -p /etc/skel/.vim/autoload \
 &&	mkdir -p /etc/skel/.vim/bundle \
 &&	curl -LSso /etc/skel/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim \
@@ -178,6 +178,7 @@ RUN	GOPATH=/tmp/gotools \
 			github.com/golang/protobuf/protoc-gen-go \
 			github.com/golang/dep/... \
 			github.com/spf13/cobra/cobra \
+			github.com/fatih/gomodifytags \
 		&& ( cd /tmp/gotools/src/github.com/golang/protobuf && make ) \
 		&& /usr/local/bin/gometalinter --install \
 	" \
