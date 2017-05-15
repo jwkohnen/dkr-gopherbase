@@ -1,4 +1,4 @@
-# Copyright 2016 Johannes Kohnen
+# Copyright 2017 Johannes Kohnen
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -81,14 +81,14 @@ RUN	apt-get update \
 &&	rm -rf /var/lib/apt/lists/*
 ENV	LANG=en_US.UTF-8
 
-ENV	_DKR_ANTLR_VERSION 4.6
-RUN	git clone --depth=1 --branch $_DKR_ANTLR_VERSION https://github.com/antlr/antlr4.git /tmp/antlr4.6 \
-&&	( cd /tmp/antlr4.6/tool && mvn package -DskipTests ) \
-&&	cp /tmp/antlr4.6/tool/target/antlr4-4.6-complete.jar /usr/local/lib/ \
-&&	rm -rf /tmp/antlr4.6 /root/.m2
-ENV	CLASSPATH .:/usr/local/lib/antlr4-4.6-complete.jar
+ENV	_DKR_ANTLR_VERSION 4.7
+RUN	git clone --depth=1 --branch $_DKR_ANTLR_VERSION https://github.com/antlr/antlr4.git /tmp/antlr \
+&&	( cd /tmp/antlr/tool && mvn package -DskipTests ) \
+&&	cp /tmp/antlr/tool/target/antlr4-${_DKR_ANTLR_VERSION}-complete.jar /usr/local/lib/ \
+&&	rm -rf /tmp/antlr /root/.m2
+ENV	CLASSPATH .:/usr/local/lib/antlr4-${_DKR_ANTLR_VERSION}-complete.jar
 
-ENV	_DKR_PROTOBUF_VERSION v3.2.0
+ENV	_DKR_PROTOBUF_VERSION v3.3.0
 RUN	git clone --depth=1 https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
 &&	cd /tmp/protobuf \
 &&	./autogen.sh \
