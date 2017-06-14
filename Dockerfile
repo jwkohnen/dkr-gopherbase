@@ -76,19 +76,24 @@ RUN	apt-get update \
 		openssh-client \
 		less \
 		upx-ucl \
+		libwebp-dev \
+		libvips-tools \
+		fftw-dev \
+		musl-dev \
+		libvips-dev \
 &&	apt-get autoremove \
 &&	apt-get clean \
-&&	rm -rf /var/lib/apt/lists/*
+&&	rm -rf /var/lib/apt/lists/* \
 ENV	LANG=en_US.UTF-8
 
 ENV	_DKR_ANTLR_VERSION 4.7
 RUN	git clone --depth=1 --branch $_DKR_ANTLR_VERSION https://github.com/antlr/antlr4.git /tmp/antlr \
 &&	( cd /tmp/antlr/tool && mvn package -DskipTests ) \
-&&	cp /tmp/antlr/tool/target/antlr4-${_DKR_ANTLR_VERSION}-complete.jar /usr/local/lib/ \
+&&	cp /tmp/antlr/tool/target/antlr4-4.6-complete.jar /usr/local/lib/ \
 &&	rm -rf /tmp/antlr /root/.m2
-ENV	CLASSPATH .:/usr/local/lib/antlr4-${_DKR_ANTLR_VERSION}-complete.jar
+ENV	CLASSPATH .:/usr/local/lib/antlr4-4.6-complete.jar
 
-ENV	_DKR_PROTOBUF_VERSION v3.3.0
+ENV	_DKR_PROTOBUF_VERSION v3.3.1
 RUN	git clone --depth=1 https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
 &&	cd /tmp/protobuf \
 &&	./autogen.sh \
@@ -112,7 +117,7 @@ RUN	git clone --depth=1 https://github.com/vim/vim.git /tmp/vim \
 &&	update-alternatives --set vi /usr/local/bin/vim
 ENV	EDITOR vim
 
-ENV	_DKR_VIMGO_VERSION v1.12
+ENV	_DKR_VIMGO_VERSION v1.13
 RUN	mkdir -p /etc/skel/.vim/autoload \
 &&	mkdir -p /etc/skel/.vim/bundle \
 &&	curl -LSso /etc/skel/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim \
@@ -133,7 +138,7 @@ RUN	git clone https://go.googlesource.com/go /usr/local/go-tip \
 &&	fixperms
 
 # build current release into /usr/local/go using 1.4 for bootstrap
-ENV	_DKR_GO_RELEASE 1.8
+ENV	_DKR_GO_RELEASE 1.7
 ENV	_DKR_BUMP 1
 RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/local/go-tip https://go.googlesource.com/go /usr/local/go \
 &&	cd /usr/local/go/src \
@@ -180,6 +185,10 @@ RUN	GOPATH=/tmp/gotools \
 			github.com/spf13/cobra/cobra \
 			github.com/kardianos/govendor \
 			github.com/fatih/gomodifytags \
+			github.com/golang/mock/gomock \
+			github.com/golang/mock/mockgen \
+			github.com/vektra/mockery/... \
+			github.com/tockins/realize \
 		&& ( cd /tmp/gotools/src/github.com/golang/protobuf && make ) \
 		&& /usr/local/bin/gometalinter --install \
 	" \
