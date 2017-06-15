@@ -81,6 +81,7 @@ RUN	apt-get update \
 		fftw-dev \
 		musl-dev \
 		libvips-dev \
+		direnv \
 &&	apt-get autoremove \
 &&	apt-get clean \
 &&	rm -rf /var/lib/apt/lists/* \
