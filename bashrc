@@ -9,4 +9,4 @@ alias gometalinter="gometalinter --vendor -e'warning: exported .+ or be unexport
 
 alias antlr4='java -jar /usr/local/lib/antlr4-4.6-complete.jar'
 
-command -V direnv && eval "$(direnv hook bash)"
+command -V direnv &>/dev/null && eval "$(direnv hook bash)"
