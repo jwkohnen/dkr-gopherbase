@@ -25,5 +25,11 @@ let g:go_highlight_build_constraints = 1
 
 let g:go_fmt_command = "goimports"
 
-" set number
-" set relativenumber
+" http://vimcasts.org/blog/2013/02/habit-breaking-habit-making/
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+set number
+set relativenumber
