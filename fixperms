@@ -1,6 +1,5 @@
 #!/bin/bash
-set -e 
-set -x 
+set -euxo pipefail
 
 find /opt /usr/local -not -group staff -print0 | xargs --null --no-run-if-empty chgrp staff --
 find /opt /usr/local -not -perm -g+w -print0 | xargs --null --no-run-if-empty chmod g+w --
