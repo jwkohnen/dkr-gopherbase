@@ -190,6 +190,7 @@ RUN	GOPATH=/tmp/gotools \
 			github.com/golang/mock/mockgen \
 			github.com/vektra/mockery/... \
 			github.com/tockins/realize \
+			golang.org/x/review/git-codereview \
 		&& ( cd /tmp/gotools/src/github.com/golang/protobuf && make ) \
 		&& /usr/local/bin/gometalinter --install \
 	" \
