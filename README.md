@@ -3,10 +3,12 @@
 [![Apache License v2.0](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
 [![Docker Layer Badge](https://images.microbadger.com/badges/image/wjkohnen/gopherbase.svg)](https://microbadger.com/images/wjkohnen/gopherbase)
 
+WARNING: This image suffers from feature-creep. ;)
+
 This is a quite large docker container that provides a development environment
 for Go. Since I have used it for collaboration to the Go target of [ANTLR](https://github.com/antlr/antlr4)
 it contains a lot of non-Go stuff like Java, Mono, NodeJS and such that is needed
-to build ANTLR. 
+to build ANTLR and whatever other project I was working on.
 
 This image features from-source-built Vim, YouCompleteMe, Protobuffer and a bunch
 of Go helper utilities like delve, gometalinter and glide.
@@ -49,7 +51,7 @@ exec docker run --rm -ti -v $HOME/.m2:$HOME/.m2 -v $HOME/git:/git -v $HOME/go:/g
 ```
 
 ## License
-   Copyright 2016 Johannes Kohnen
+   Copyright 2017 Johannes Kohnen
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
