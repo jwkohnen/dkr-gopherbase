@@ -123,9 +123,9 @@ RUN	mkdir -p /etc/skel/.vim/autoload \
 &&	mkdir -p /etc/skel/.vim/bundle \
 &&	curl -LSso /etc/skel/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim \
 &&	git clone --depth=1 https://github.com/fatih/vim-go.git --branch $_DKR_VIMGO_VERSION /etc/skel/.vim/bundle/vim-go \
-&&	git clone --depth=1 https://github.com/Valloric/YouCompleteMe.git /opt/YouCompleteMe  \
+&&	git clone --depth=1 --shallow-submodules https://github.com/Valloric/YouCompleteMe.git /opt/YouCompleteMe  \
 &&	cd /opt/YouCompleteMe \
-&&	git submodule update --init --recursive \
+&&	git submodule update --init --jobs=4 --recursive \
 &&	./install.py \
 &&	fixperms \
 &&	ln -s /opt/YouCompleteMe /etc/skel/.vim/bundle/YouCompleteMe
@@ -151,8 +151,8 @@ ENV	PATH /usr/local/go/bin:$PATH
 # build tip into go-tip, using current release as bootstrap
 ENV	_DKR_BUMP 4
 RUN	cd /usr/local/go-tip/src \
-&&	git pull \
 &&	git checkout master \
+&&	git pull \
 &&	GOROOT_BOOTSTRAP=/usr/local/go ./make.bash \
 &&	fixperms
 
