@@ -23,7 +23,7 @@ COPY	locale.gen /etc/
 COPY	fixperms /usr/local/sbin/
 
 # http://stackoverflow.com/a/26217767/2715936 !?!?
-ENV 	DEBIAN_FRONTEND noninteractive
+ENV	DEBIAN_FRONTEND noninteractive
 RUN	apt-get update \
 &&	apt-get -yqq install dpkg apt \
 &&	apt-get -yqq upgrade \
@@ -139,7 +139,7 @@ RUN	git clone https://go.googlesource.com/go /usr/local/go-tip \
 &&	fixperms
 
 # build current release into /usr/local/go using 1.4 for bootstrap
-ENV	_DKR_GO_RELEASE 1.8
+ENV	_DKR_GO_RELEASE 1.9
 ENV	_DKR_BUMP 1
 RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/local/go-tip https://go.googlesource.com/go /usr/local/go \
 &&	cd /usr/local/go/src \
