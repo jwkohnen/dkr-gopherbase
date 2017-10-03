@@ -195,6 +195,9 @@ RUN	GOPATH=/tmp/gotools \
 			github.com/pquerna/ffjson \
 		&& ( cd /tmp/gotools/src/github.com/golang/protobuf && make ) \
 		&& /usr/local/bin/gometalinter --install \
+		&& cp -a /etc/skel/.vim* /root/ \
+		&& vim +GoInstallBinaries +q \
+		&& rm -r /root/.vim* \
 	" \
 &&	rm -r /tmp/gotools \
 &&	fixperms
