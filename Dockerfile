@@ -94,7 +94,7 @@ RUN	git clone --depth=1 --branch $_DKR_ANTLR_VERSION https://github.com/antlr/an
 &&	rm -rf /tmp/antlr /root/.m2
 ENV	CLASSPATH .:/usr/local/lib/antlr4-4.6-complete.jar
 
-ENV	_DKR_PROTOBUF_VERSION v3.3.2
+ENV	_DKR_PROTOBUF_VERSION v3.4.1
 RUN	git clone --depth=1 https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
 &&	cd /tmp/protobuf \
 &&	./autogen.sh \
@@ -118,7 +118,7 @@ RUN	git clone --depth=1 https://github.com/vim/vim.git /tmp/vim \
 &&	update-alternatives --set vi /usr/local/bin/vim
 ENV	EDITOR vim
 
-ENV	_DKR_VIMGO_VERSION v1.14
+ENV	_DKR_VIMGO_VERSION v1.15
 RUN	mkdir -p /etc/skel/.vim/autoload \
 &&	mkdir -p /etc/skel/.vim/bundle \
 &&	curl -LSso /etc/skel/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim \
