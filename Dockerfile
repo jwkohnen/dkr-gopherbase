@@ -140,7 +140,7 @@ RUN	git clone https://go.googlesource.com/go /usr/local/go-tip \
 
 # build current release into /usr/local/go using 1.4 for bootstrap
 ENV	_DKR_GO_RELEASE 1.9
-ENV	_DKR_BUMP 1
+ENV	_DKR_BUMP 2
 RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/local/go-tip https://go.googlesource.com/go /usr/local/go \
 &&	cd /usr/local/go/src \
 &&	GOROOT_BOOTSTRAP=/usr/local/go1.4 ./make.bash \
