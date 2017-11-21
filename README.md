@@ -11,7 +11,7 @@ it contains a lot of non-Go stuff like Java, Mono, NodeJS and such that is neede
 to build ANTLR and whatever other project I was working on.
 
 This image features from-source-built Vim, YouCompleteMe, Protobuffer and a bunch
-of Go helper utilities like delve, gometalinter and glide.
+of Go helper utilities like delve, gometalinter and dep.
 
 This image is not meant to be used directly, but instead as a base image for an
 image that configures an in-container user that matches UID and GID of the user
@@ -19,27 +19,24 @@ on the host system and that adds SSH keys et cetera. This is the derivate
 Dockerfile that I use:
 
 ```
-FROM	wjkohnen/gopherbase:latest
+FROM    wjkohnen/gopherbase:latest
 MAINTAINER Johannes Kohnen <wjkohnen@users.noreply.github.com>
 
-ARG	u=wjk
-ARG	uid=1001
-ARG	fn="Johannes Kohnen"
-ARG	m="wjkohnen@users.noreply.github.com"
+# https://github.com/BurntSushi/ripgrep
+COPY    rg /usr/local/bin/
 
-RUN	addgroup --gid $uid $u \
-&&	adduser --disabled-password --gecos "$fn" --uid $uid --ingroup $u $u \
-&&	adduser $u staff
+RUN     addgroup --gid 1000 jb \
+&&      adduser --disabled-password --gecos "Johannes Kohnen" --uid 1000 --ingroup jb jb \
+&&      adduser jb staff
+COPY    ssh/ /home/jb/.ssh/
+RUN     chown -R jb: /home/jb
 
-COPY	ssh/ /home/$u/.ssh/
-RUN	chown -R $u: /home/$u
+USER    jb
+RUN     git config --global user.name "Johannes Kohnen" \
+&&      git config --global user.email "wjkohnen@users.noreply.github.com"
 
-USER	$u
-RUN	git config --global user.name "$fn" \
-&&	git config --global user.email "$m"
-
-ENV	GOPATH /go/default
-WORKDIR	/go
+ENV     GOPATH /go/default
+WORKDIR /go
 ```
 
 Given that image is called `gopher` I use a small wrapper script like this:
@@ -47,7 +44,7 @@ Given that image is called `gopher` I use a small wrapper script like this:
 ```
 #!/bin/sh
 
-exec docker run --rm -ti -v $HOME/.m2:$HOME/.m2 -v $HOME/git:/git -v $HOME/go:/go "$@" gopher
+exec docker run -ti --net=host -v $HOME/.config/direnv/allow-gopher:$HOME/.config/direnv/allow -v $HOME/.glide:$HOME/.glide -v $HOME/.m2:$HOME/.m2 -v $HOME/git:/git -v $HOME/go:/go "$@" gopher
 ```
 
 ## License
