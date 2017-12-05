@@ -33,3 +33,8 @@ noremap <Right> <NOP>
 
 set number
 set relativenumber
+
+" Workaround to set guru scope (as autodetect seems not to work)
+if !empty($GOGURU_SCOPE)
+	let g:go_guru_scope = split($GOGURU_SCOPE, ":")
+endif
