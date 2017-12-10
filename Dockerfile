@@ -87,14 +87,14 @@ RUN	apt-get update \
 &&	rm -rf /var/lib/apt/lists/* \
 ENV	LANG=en_US.UTF-8
 
-ENV	_DKR_ANTLR_VERSION 4.7
+ARG	_DKR_ANTLR_VERSION=4.7
 RUN	git clone --depth=1 --branch $_DKR_ANTLR_VERSION https://github.com/antlr/antlr4.git /tmp/antlr \
 &&	( cd /tmp/antlr/tool && mvn package -DskipTests ) \
 &&	cp /tmp/antlr/tool/target/antlr4-4.6-complete.jar /usr/local/lib/ \
 &&	rm -rf /tmp/antlr /root/.m2
 ENV	CLASSPATH .:/usr/local/lib/antlr4-4.6-complete.jar
 
-ENV	_DKR_PROTOBUF_VERSION v3.4.1
+ARG	_DKR_PROTOBUF_VERSION=v3.4.1
 RUN	git clone --depth=1 https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
 &&	cd /tmp/protobuf \
 &&	./autogen.sh \
@@ -118,7 +118,7 @@ RUN	git clone --depth=1 https://github.com/vim/vim.git /tmp/vim \
 &&	update-alternatives --set vi /usr/local/bin/vim
 ENV	EDITOR vim
 
-ENV	_DKR_VIMGO_VERSION v1.15
+ARG	_DKR_VIMGO_VERSION=v1.15
 RUN	mkdir -p /etc/skel/.vim/autoload \
 &&	mkdir -p /etc/skel/.vim/bundle \
 &&	curl -LSso /etc/skel/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim \
@@ -139,8 +139,7 @@ RUN	git clone https://go.googlesource.com/go /usr/local/go-tip \
 &&	fixperms
 
 # build current release into /usr/local/go using 1.4 for bootstrap
-ENV	_DKR_GO_RELEASE 1.9
-ENV	_DKR_BUMP 2
+ARG	_DKR_GO_RELEASE=1.9
 RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/local/go-tip https://go.googlesource.com/go /usr/local/go \
 &&	cd /usr/local/go/src \
 &&	GOROOT_BOOTSTRAP=/usr/local/go1.4 ./make.bash \
@@ -149,7 +148,6 @@ RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/loca
 ENV	PATH /usr/local/go/bin:$PATH
 
 # build tip into go-tip, using current release as bootstrap
-ENV	_DKR_BUMP 4
 RUN	cd /usr/local/go-tip/src \
 &&	git checkout master \
 &&	git pull \
