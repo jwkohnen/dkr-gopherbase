@@ -87,12 +87,12 @@ RUN	apt-get update \
 &&	rm -rf /var/lib/apt/lists/* \
 ENV	LANG=en_US.UTF-8
 
-ARG	_DKR_ANTLR_VERSION=4.7
-RUN	git clone --depth=1 --branch $_DKR_ANTLR_VERSION https://github.com/antlr/antlr4.git /tmp/antlr \
+ARG	DKR_ANTLR_VERSION=4.7.1
+RUN	git clone --depth=1 --branch $DKR_ANTLR_VERSION https://github.com/antlr/antlr4.git /tmp/antlr \
 &&	( cd /tmp/antlr/tool && mvn package -DskipTests ) \
-&&	cp /tmp/antlr/tool/target/antlr4-4.6-complete.jar /usr/local/lib/ \
+&&	cp /tmp/antlr/tool/target/antlr4-${DKR_ANTLR_VERSION}-complete.jar /usr/local/lib/ \
 &&	rm -rf /tmp/antlr /root/.m2
-ENV	CLASSPATH .:/usr/local/lib/antlr4-4.6-complete.jar
+ENV	CLASSPATH .:/usr/local/lib/antlr4-${DKR_ANTLR_VERSION}-complete.jar
 
 ARG	_DKR_PROTOBUF_VERSION=v3.4.1
 RUN	git clone --depth=1 https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
