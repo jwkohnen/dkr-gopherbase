@@ -12,4 +12,4 @@ alias antlr4='java -jar /usr/local/lib/antlr4-4.6-complete.jar'
 
 command -V direnv &>/dev/null && eval "$(direnv hook bash)"
 
-alias gocoverhtml='go test --covermode atomic --coverprofile cover.out && go tool cover --html cover.out -o cover.html'
+alias gocoverhtml='go test --covermode atomic --coverprofile cover.out ; go tool cover --html cover.out -o cover.html'
