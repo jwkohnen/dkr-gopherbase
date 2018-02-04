@@ -3,6 +3,8 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>t <Plug>(go-test)
