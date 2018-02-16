@@ -144,22 +144,23 @@ RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/loca
 &&	cd /usr/local/go/src \
 &&	GOROOT_BOOTSTRAP=/usr/local/go1.4 ./make.bash \
 &&	fixperms
-# keep PATH in sync with bashrc!
-ENV	PATH /usr/local/go/bin:$PATH
 
 # build tip into go-tip, using current release as bootstrap
-ARG	_BUMP=2018-01-06
+ARG	_BUMP=2018-02-05
 RUN	cd /usr/local/go-tip/src \
 &&	git checkout master \
 &&	git pull \
 &&	GOROOT_BOOTSTRAP=/usr/local/go ./make.bash \
 &&	fixperms
 
+# keep PATH in sync with bashrc!
+ENV	PATH /usr/local/go-tip/bin:$PATH
+
 # cache some go runtimes
-RUN	GOOS=windows /usr/local/go/bin/go install -v std \
-&&	GOOS=darwin /usr/local/go/bin/go install -v std \
-&&	GOARCH=386 /usr/local/go/bin/go install -v std \
-&&	/usr/local/go/bin/go install -v -race std \
+RUN	GOOS=windows go install -v std \
+&&	GOOS=darwin go install -v std \
+&&	GOARCH=386 go install -v std \
+&&	go install -v -race std \
 &&	fixperms
 
 RUN	GOPATH=/tmp/gotools \
