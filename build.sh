@@ -7,5 +7,6 @@ VCS_REF=$(git rev-parse HEAD)
 docker build . -f Dockerfile -t wjkohnen/gopherbase:${TAG} \
 	--build-arg VERSION="${VERSION}" \
 	--build-arg BUILD_DATE="${BUILD_DATE}" \
-	--build-arg VCS_REF="${VCS_REF}" 
+	--build-arg VCS_REF="${VCS_REF}" \
+	$@
 docker tag wjkohnen/gopherbase:${TAG} wjkohnen/gopherbase:latest

@@ -139,7 +139,7 @@ RUN	git clone https://go.googlesource.com/go /usr/local/go-tip \
 &&	fixperms
 
 # build current release into /usr/local/go using 1.4 for bootstrap
-ARG	_DKR_GO_RELEASE=1.9
+ARG	_DKR_GO_RELEASE=1.10
 RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/local/go-tip https://go.googlesource.com/go /usr/local/go \
 &&	cd /usr/local/go/src \
 &&	GOROOT_BOOTSTRAP=/usr/local/go1.4 ./make.bash \
