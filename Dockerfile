@@ -118,7 +118,7 @@ RUN	git clone --depth=1 https://github.com/vim/vim.git /tmp/vim \
 &&	update-alternatives --set vi /usr/local/bin/vim
 ENV	EDITOR vim
 
-ARG	_DKR_VIMGO_VERSION=v1.16
+ARG	_DKR_VIMGO_VERSION=v1.17
 RUN	mkdir -p /etc/skel/.vim/autoload \
 &&	mkdir -p /etc/skel/.vim/bundle \
 &&	curl -LSso /etc/skel/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim \
@@ -146,7 +146,7 @@ RUN	git clone --branch release-branch.go${_DKR_GO_RELEASE} --reference /usr/loca
 &&	fixperms
 
 # build tip into go-tip, using current release as bootstrap
-ARG	_BUMP=2018-02-05
+ARG	_BUMP=2018-03-28
 RUN	cd /usr/local/go-tip/src \
 &&	git checkout master \
 &&	git pull \
