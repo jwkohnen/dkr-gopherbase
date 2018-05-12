@@ -3,3 +3,4 @@
 # target hosts are not worth obscuring, again YMMV.
 Host *
     HashKnownHosts no
+    BatchMode yes
