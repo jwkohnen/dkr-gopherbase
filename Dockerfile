@@ -168,7 +168,7 @@ RUN	GOPATH=/tmp/gotools \
 	/bin/sh -c "\
 		go get -v \
 			golang.org/x/tools/cmd/... \
-			github.com/nsf/gocode \
+			github.com/mdempsky/gocode \
 			github.com/rogpeppe/godef \
 			github.com/golang/lint/golint \
 			github.com/jstemmer/gotags \
