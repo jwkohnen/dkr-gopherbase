@@ -216,7 +216,9 @@ COPY	ssh/ssh_config ssh/ssh_known_hosts /etc/ssh/
 
 RUN	git config --system alias.st status \
 &&	git config --system commit.verbose true \
-&&	git config --system push.default simple
+&&	git config --system push.default simple \
+&&	git config url."ssh://git@gitlab.com/".insteadOf "https://gitlab.com/" \
+&&	git config url."ssh://git@github.com/".insteadOf "https://github.com/"
 
 ARG	BUILD_DATE
 ARG	VCS_REF
