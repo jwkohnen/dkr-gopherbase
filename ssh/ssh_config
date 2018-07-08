@@ -2,5 +2,6 @@
 # of known hosts is off, in order to ease manual persisting of entries. Most
 # target hosts are not worth obscuring, again YMMV.
 Host *
-    HashKnownHosts no
-    PasswordAuthentication no
+	HashKnownHosts no
+	BatchMode yes
+	ServerAliveInterval 60
