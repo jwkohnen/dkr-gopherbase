@@ -1,4 +1,4 @@
-# Copyright 2017 Johannes Kohnen
+# Copyright 2018 Johannes Kohnen
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM	debian:stretch
+FROM	debian:testing
 MAINTAINER	Johannes Kohnen <wjkohnen@users.noreply.github.com>
 
 CMD	["/bin/bash", "-li"]
@@ -94,7 +94,7 @@ RUN	git clone --depth=1 --branch $DKR_ANTLR_VERSION https://github.com/antlr/ant
 &&	rm -rf /tmp/antlr /root/.m2
 ENV	CLASSPATH .:/usr/local/lib/antlr4-${DKR_ANTLR_VERSION}-complete.jar
 
-ARG	_DKR_PROTOBUF_VERSION=v3.5.1
+ARG	_DKR_PROTOBUF_VERSION=v3.6.0
 RUN	git clone --depth=1 https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
 &&	cd /tmp/protobuf \
 &&	./autogen.sh \
