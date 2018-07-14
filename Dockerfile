@@ -198,6 +198,7 @@ RUN	GOPATH=/tmp/gotools \
 			github.com/boyter/lc \
 			golang.org/x/vgo \
 			github.com/gogo/protobuf/... \
+			github.com/go-critic/go-critic/... \
 		&& ( cd /tmp/gotools/src/github.com/golang/protobuf && make ) \
 		&& /usr/local/bin/gometalinter --install \
 		&& cp -a /etc/skel/.vim* /root/ \
