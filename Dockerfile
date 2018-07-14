@@ -97,7 +97,7 @@ ENV	CLASSPATH .:/usr/local/lib/antlr4-${DKR_ANTLR_VERSION}-complete.jar
 ARG	_DKR_PROTOBUF_VERSION=v3.6.0
 RUN	git clone --depth=1 https://github.com/google/protobuf --branch $_DKR_PROTOBUF_VERSION /tmp/protobuf \
 &&	cd /tmp/protobuf \
-&&	git submodule update --init --recursive
+&&	git submodule update --init --recursive \
 &&	./autogen.sh \
 &&	./configure \
 &&	make \
