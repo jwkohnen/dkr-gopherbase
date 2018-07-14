@@ -163,8 +163,6 @@ RUN	GOOS=windows go install -v std \
 &&	GOARCH=386 go install -v std \
 &&	GOARCH=arm GOARM=6 go install -v std \
 &&	GOARCH=arm GOARM=7 go install -v std \
-&&	GOARCH=arm GOARM=6 go install -v -race std \
-&&	GOARCH=arm GOARM=7 go install -v -race std \
 &&	GOARCH=amd64 go install -v -race std \
 &&	fixperms
 
