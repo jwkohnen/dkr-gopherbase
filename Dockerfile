@@ -212,11 +212,14 @@ RUN	GOPATH=/tmp/gotools \
 
 RUN	dpkg-divert /etc/ssh/ssh_config \
 &&	echo "%staff ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudo_nopasswd \
-&&	mkdir /etc/skel/.ssh \
+&&	mkdir -p /etc/skel/.ssh \
+&&	mkdir -p /etc/skel/.config \
 &&	chmod 700 /etc/skel/.ssh \
 &&	echo '. ~/.bashrc_gopher' >> /etc/skel/.bashrc \
+&&	git clone --depth=1 --branch 'v_1.11' https://github.com/nojhan/liquidprompt.git /etc/skel/.nojhan/liquidprompt \
 &&	git clone --depth=1 https://github.com/magicmonty/bash-git-prompt.git /etc/skel/.bash-git-prompt
 COPY	bashrc /etc/skel/.bashrc_gopher
+COPY	liquidpromptrc /etc/skel/.config/
 COPY	ssh/ssh_config ssh/ssh_known_hosts /etc/ssh/
 
 RUN	git config --system alias.st status \
