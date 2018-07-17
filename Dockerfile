@@ -84,7 +84,7 @@ RUN	apt-get update \
 		direnv \
 &&	apt-get autoremove \
 &&	apt-get clean \
-&&	rm -rf /var/lib/apt/lists/* \
+&&	rm -rf /var/lib/apt/lists/*
 ENV	LANG=en_US.UTF-8
 
 ARG	DKR_ANTLR_VERSION=4.7.1
