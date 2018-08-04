@@ -82,6 +82,7 @@ RUN	apt-get update \
 		musl-dev \
 		libvips-dev \
 		direnv \
+		time \
 &&	apt-get autoremove \
 &&	apt-get clean \
 &&	rm -rf /var/lib/apt/lists/*
