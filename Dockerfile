@@ -83,7 +83,7 @@ RUN	apt-get update \
 		libvips-dev \
 		direnv \
 		time \
-&&	apt-get autoremove \
+&&	apt-get autoremove -y \
 &&	apt-get clean \
 &&	rm -rf /var/lib/apt/lists/*
 ENV	LANG=en_US.UTF-8
