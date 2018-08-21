@@ -44,6 +44,7 @@ RUN	apt-get update \
 		nvi \
 		build-essential \
 		git \
+		git-extras \
 		sudo \
 		screen \
 		mercurial \
