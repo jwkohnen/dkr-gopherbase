@@ -1,0 +1,8 @@
+export EDITOR=vim
+
+alias antlr4='java -jar /usr/local/lib/antlr4-4.6-complete.jar'
+
+command -V direnv &>/dev/null && eval "$(direnv hook bash)"
+
+HISTSIZE=314572800
+HISTFILESIZE=314572800
