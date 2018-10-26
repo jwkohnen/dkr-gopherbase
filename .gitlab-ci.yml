@@ -1,7 +1,6 @@
 variables:
   GOOGLE_APPLICATION_CREDENTIALS: /gcloud-service-key.json
-  CI_REGISTRY_IMAGE: $REGISTRY/$REGISTRY_PROJECT
-  CI_IMAGE_TAG: $CI_REGISTRY_IMAGE/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+  CI_IMAGE_TAG: $REGISTRY/$REGISTRY_PROJECT/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
 
 before_script:
   - echo $GCLOUD_SERVICE_KEY | base64 -d >$GOOGLE_APPLICATION_CREDENTIALS
@@ -16,26 +15,26 @@ stages:
 build:
   stage: build
   script:
-    - docker build --pull -t $CI_IMAGE_TAG:$CI_BUILD_REF --build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") --build-arg VCS_REF=$CI_BUILD_REF --build-arg VERSION=$CI_BUILD_TAG .
-    - docker push $CI_IMAGE_TAG:$CI_BUILD_REF
+    - docker build --pull -t $CI_IMAGE_TAG:$CI_COMMIT_SHA --build-arg BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") --build-arg VCS_REF=$CI_COMMIT_SHA --build-arg VERSION=$CI_COMMIT_TAG .
+    - docker push $CI_IMAGE_TAG:$CI_COMMIT_SHA
   only: 
     - tags
 
 release-by-name:
   stage: release
   script: 
-    - docker pull $CI_IMAGE_TAG:$CI_BUILD_REF
-    - docker tag $CI_IMAGE_TAG:$CI_BUILD_REF $CI_IMAGE_TAG:$CI_BUILD_TAG
-    - docker push $CI_IMAGE_TAG:$CI_BUILD_REF_NAME
+    - docker pull $CI_IMAGE_TAG:$CI_COMMIT_SHA
+    - docker tag $CI_IMAGE_TAG:$CI_COMMIT_SHA $CI_IMAGE_TAG:$CI_COMMIT_TAG
+    - docker push $CI_IMAGE_TAG:$CI_COMMIT_REF_NAME
   except: 
     - master
 
 release-master:
   stage: release
   script: 
-    - docker pull $CI_IMAGE_TAG:$CI_BUILD_REF
-    - docker tag $CI_IMAGE_TAG:$CI_BUILD_REF $CI_IMAGE_TAG:$CI_BUILD_TAG
-    - docker tag $CI_IMAGE_TAG:$CI_BUILD_REF $CI_IMAGE_TAG:latest
+    - docker pull $CI_IMAGE_TAG:$CI_COMMIT_SHA
+    - docker tag $CI_IMAGE_TAG:$CI_COMMIT_SHA $CI_IMAGE_TAG:$CI_COMMIT_TAG
+    - docker tag $CI_IMAGE_TAG:$CI_COMMIT_SHA $CI_IMAGE_TAG:latest
     - docker push $CI_IMAGE_TAG:latest
   only: 
     - master
