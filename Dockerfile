@@ -176,7 +176,6 @@ RUN	GOPATH=/tmp/gotools \
 			github.com/rogpeppe/godef \
 			github.com/golang/lint/golint \
 			github.com/jstemmer/gotags \
-			github.com/garyburd/go-explorer/src/getool \
 			github.com/alecthomas/gometalinter \
 			github.com/klauspost/asmfmt/cmd/asmfmt \
 			github.com/josharian/impl \
