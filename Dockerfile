@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM	debian:testing
+FROM	debian:stretch
 MAINTAINER	Johannes Kohnen <wjkohnen@users.noreply.github.com>
 
 CMD	["/bin/bash", "-li"]
