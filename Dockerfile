@@ -228,6 +228,7 @@ RUN	git config --system alias.st status \
 &&	git config --system alias.lol "log --graph --decorate --oneline --abbrev-commit --all" \
 &&	git config --system commit.verbose true \
 &&	git config --system push.default simple \
+&&	git config --system core.commentChar auto \
 &&	git config --system --add url."ssh://git@gitlab.com/".insteadOf "https://gitlab.com/" \
 &&	git config --system --add url."ssh://git@gitlab.com/".insteadOf "gitlab:" \
 &&	git config --system --add url."ssh://git@github.com/".insteadOf "https://github.com/" \
