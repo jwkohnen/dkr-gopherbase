@@ -1,5 +1,7 @@
 # Gopherbase, an overengineered Go development environment in Docker
 
+This repository is archived, because I haven't used it in years.  It does not support Go modules and uses outdated tools et cetera.
+
 [![Apache License v2.0](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.txt)
 [![Docker Layer Badge](https://images.microbadger.com/badges/image/wjkohnen/gopherbase.svg)](https://microbadger.com/images/wjkohnen/gopherbase)
 
